@@ -133,218 +133,241 @@ value="Nouvelle demande - Business Data Pilot">
             </div>
         </div>
 
-        <!-- ================= 2. OBJECTIF ================= -->
+       
+<!-- ================= 2. VOTRE PROJET CONCERNE ================= -->
 
-        <div class="form-section">
-            <div class="form-section-title">
-                <span class="form-number">02</span>
-                <div>
-                    <h2>Votre objectif</h2>
-                    <p class="form-description">
-                        Choisissez le type d'objectif correspondant à votre projet.
-                    </p>
-                </div>
-            </div>
+<div class="form-section">
 
-            <div class="form-group">
-                <label>Votre objectif concerne :</label>
+    <div class="form-section-title">
+        <span class="form-number">02</span>
+        <div>
+            <h2>Votre projet concerne</h2>
+            <p class="form-description">
+                Avez-vous déjà une idée du type d’analyse statistique que vous souhaitez réaliser ou des méthodes que vous souhaitez utiliser ?
+            </p>
+        </div>
+    </div>
 
-                <div class="checkbox-grid">
-                    <label class="option">
-                        <input
-                            type="radio"
-                            name="domaine"
-                            value="Dans le domaine statistique"
-                            required
-                            onchange="afficherDomaine()"
-                        >
-                        Dans le domaine statistique
-                    </label>
+    <div class="form-group">
 
-                    <label class="option">
-                        <input
-                            type="radio"
-                            name="domaine"
-                            value="Hors du domaine statistique"
-                            onchange="afficherDomaine()"
-                        >
-                        Hors du domaine statistique
-                    </label>
-                </div>
-            </div>
+        <div class="checkbox-grid">
 
-            <!-- DANS LE DOMAINE STATISTIQUE -->
+            <label class="option">
+                <input
+                    type="radio"
+                    name="idee_analyse"
+                    value="Oui, j’ai déjà une idée"
+                    required
+                    onchange="afficherDomaine()"
+                >
+                Oui, j’ai déjà une idée.
+            </label>
 
-            <div id="sectionDans" style="display:none;">
-                <div class="form-group">
-                    <label>Services souhaités :</label>
+            <label class="option">
+                <input
+                    type="radio"
+                    name="idee_analyse"
+                    value="Non, je n’ai pas encore d’idée précise"
+                    onchange="afficherDomaine()"
+                >
+                Non, je n’ai pas encore d’idée précise.
+            </label>
 
-                    <div class="checkbox-grid">
-                        <label class="option">
-                            <input type="checkbox" name="service"
-                                   value="Nettoyage et préparation des données">
-                            Nettoyage et préparation des données
-                        </label>
+        </div>
+    </div>
 
-                        <label class="option">
-                            <input type="checkbox" name="service"
-                                   value="Analyse statistique">
-                            Analyse statistique
-                        </label>
+    <!-- OUI : SERVICES STATISTIQUES -->
 
-                        <label class="option">
-                            <input type="checkbox" name="service"
-                                   value="Étude / enquête">
-                            Étude / enquête
-                        </label>
+    <div id="sectionDans" style="display:none;">
 
-                        <label class="option">
-                            <input type="checkbox" name="service"
-                                   value="Étude de marché">
-                            Étude de marché
-                        </label>
+        <div class="form-group">
+            <label>Services souhaités :</label>
 
-                        <label class="option">
-                            <input type="checkbox" name="service"
-                                   value="Modélisation / prévision">
-                            Modélisation / prévision
-                        </label>
+            <div class="checkbox-grid">
 
-                        <label class="option">
-                            <input type="checkbox" name="service"
-                                   value="Machine Learning">
-                            Machine Learning
-                        </label>
+                <label class="option">
+                    <input type="checkbox" name="service"
+                           value="Nettoyage et préparation des données">
+                    Nettoyage et préparation des données
+                </label>
 
-                        <label class="option">
-                            <input type="checkbox" name="service"
-                                   value="Rapport / visualisation">
-                            Rapport / visualisation
-                        </label>
+                <label class="option">
+                    <input type="checkbox" name="service"
+                           value="Analyse statistique">
+                    Analyse statistique
+                </label>
 
-                        <label class="option">
-                            <input type="checkbox" name="service"
-                                   value="Tableau de bord">
-                            Tableau de bord
-                        </label>
+                <label class="option">
+                    <input type="checkbox" name="service"
+                           value="Étude / enquête">
+                    Étude / enquête
+                </label>
 
-                        <label class="option">
-                            <input type="checkbox" name="service"
-                                   value="Interprétation des résultats">
-                            Interprétation des résultats
-                        </label>
+                <label class="option">
+                    <input type="checkbox" name="service"
+                           value="Étude de marché">
+                    Étude de marché
+                </label>
 
-                        <label class="option">
-                            <input type="checkbox" name="service"
-                                   value="Analyse de risque">
-                            Analyse de risque
-                        </label>
+                <label class="option">
+                    <input type="checkbox" name="service"
+                           value="Modélisation / prévision">
+                    Modélisation / prévision
+                </label>
 
-                        <label class="option">
-                            <input type="checkbox" name="service"
-                                   value="Autre service">
-                            Autre
-                        </label>
-                    </div>
-                </div>
+                <label class="option">
+                    <input type="checkbox" name="service"
+                           value="Machine Learning">
+                    Machine Learning
+                </label>
 
-                <div class="form-group">
-                    <p class="form-description">
-                        Vous souhaitez obtenir davantage d'informations
-                        sur nos prestations ?
-                        Consultez notre page Services pour découvrir
-                        les détails de chaque service.
-                    </p>
+                <label class="option">
+                    <input type="checkbox" name="service"
+                           value="Rapport / visualisation">
+                    Rapport / visualisation
+                </label>
 
-                    <a href="index.html#services"
-                       class="btn"
-                       target="_blank">
-                        Découvrir nos services
-                    </a>
-                </div>
+                <label class="option">
+                    <input type="checkbox" name="service"
+                           value="Tableau de bord">
+                    Tableau de bord
+                </label>
 
-                <div class="form-group">
-                    <label for="objectifSupplementaire">
-                        Informations complémentaires
-                    </label>
+                <label class="option">
+                    <input type="checkbox" name="service"
+                           value="Interprétation des résultats">
+                    Interprétation des résultats
+                </label>
 
-                    <textarea
-                        id="objectifSupplementaire"
-                        name="objectifSupplementaire"
-                        rows="4"
-                        placeholder="Vous avez une demande particulière ou un objectif supplémentaire ? Précisez-le ici..."
-                    ></textarea>
-                </div>
-            </div>
+                <label class="option">
+                    <input type="checkbox" name="service"
+                           value="Analyse de risque">
+                    Analyse de risque
+                </label>
 
-            <!-- HORS DU DOMAINE STATISTIQUE -->
+                <label class="option">
+                    <input type="checkbox" name="service"
+                           value="Autre service">
+                    Autre
+                </label>
 
-            <div id="sectionHors" style="display:none;">
-                <div class="form-group">
-                    <label>Comment souhaitez-vous procéder ?</label>
-
-                    <div class="checkbox-grid">
-                        <label class="option">
-                            <input
-                                type="radio"
-                                name="choixHors"
-                                value="Autre objectif"
-                                onchange="afficherHors()"
-                            >
-                            Autre objectif
-                        </label>
-
-                        <label class="option">
-                            <input
-                                type="radio"
-                                name="choixHors"
-                                value="Accompagnement personnalisé"
-                                onchange="afficherHors()"
-                            >
-                            Accompagnement personnalisé
-                        </label>
-                    </div>
-                </div>
-
-                <div id="autreObjectif" style="display:none;">
-                    <div class="form-group">
-                        <label for="descriptionAutreObjectif">
-                            Décrivez votre objectif
-                        </label>
-
-                        <textarea
-                            id="descriptionAutreObjectif"
-                            name="descriptionAutreObjectif"
-                            rows="5"
-                            placeholder="Expliquez-nous ce que vous souhaitez réaliser avec vos propres données..."
-                        ></textarea>
-                    </div>
-                </div>
-
-                <div id="accompagnement" style="display:none;">
-                    <div class="form-group">
-                        <p class="form-description">
-                            Vous avez un projet particulier, mais vous ne savez
-                            pas exactement comment l'exploiter ?
-                            Notre équipe étudiera votre objectif et les données
-                            disponibles afin de déterminer une approche adaptée
-                            et de vous proposer une solution personnalisée.
-                        </p>
-
-                        <label for="descriptionAccompagnement">
-                            Présentez-nous votre projet (facultatif)
-                        </label>
-
-                        <textarea
-                            id="descriptionAccompagnement"
-                            name="descriptionAccompagnement"
-                            rows="5"
-                            placeholder="Présentez-nous brièvement votre projet ou votre objectif..."
-                        ></textarea>
-                    </div>
-                </div>
             </div>
         </div>
+
+        <div class="form-group">
+
+            <p class="form-description">
+                Vous souhaitez obtenir davantage d'informations
+                sur nos prestations ?
+                Consultez notre page Services pour découvrir
+                les détails de chaque service.
+            </p>
+
+            <a href="index.html#services"
+               class="btn"
+               target="_blank">
+                Découvrir nos services
+            </a>
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="objectifSupplementaire">
+                Informations complémentaires
+            </label>
+
+            <textarea
+                id="objectifSupplementaire"
+                name="objectifSupplementaire"
+                rows="4"
+                placeholder="Vous avez une demande particulière ou un objectif supplémentaire ? Précisez-le ici..."
+            ></textarea>
+
+        </div>
+
+    </div>
+
+    <!-- NON : AUTRE OBJECTIF OU ACCOMPAGNEMENT -->
+
+    <div id="sectionHors" style="display:none;">
+
+        <div class="form-group">
+
+            <label>Comment souhaitez-vous procéder ?</label>
+
+            <div class="checkbox-grid">
+
+                <label class="option">
+                    <input
+                        type="radio"
+                        name="choixHors"
+                        value="Autre objectif"
+                        onchange="afficherHors()"
+                    >
+                    Autre objectif
+                </label>
+
+                <label class="option">
+                    <input
+                        type="radio"
+                        name="choixHors"
+                        value="Accompagnement personnalisé"
+                        onchange="afficherHors()"
+                    >
+                    Accompagnement personnalisé
+                </label>
+
+            </div>
+        </div>
+
+        <div id="autreObjectif" style="display:none;">
+
+            <div class="form-group">
+
+                <label for="descriptionAutreObjectif">
+                    Décrivez votre objectif
+                </label>
+
+                <textarea
+                    id="descriptionAutreObjectif"
+                    name="descriptionAutreObjectif"
+                    rows="5"
+                    placeholder="Expliquez-nous ce que vous souhaitez réaliser avec vos propres données..."
+                ></textarea>
+
+            </div>
+        </div>
+
+        <div id="accompagnement" style="display:none;">
+
+            <div class="form-group">
+
+                <p class="form-description">
+                    Vous avez un projet particulier, mais vous ne savez
+                    pas exactement comment l'exploiter ?
+                    Notre équipe étudiera votre objectif et les données
+                    disponibles afin de déterminer une approche adaptée
+                    et de vous proposer une solution personnalisée.
+                </p>
+
+                <label for="descriptionAccompagnement">
+                    Présentez-nous votre projet (facultatif)
+                </label>
+
+                <textarea
+                    id="descriptionAccompagnement"
+                    name="descriptionAccompagnement"
+                    rows="5"
+                    placeholder="Présentez-nous brièvement votre projet ou votre objectif..."
+                ></textarea>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
                 <!-- ================= 3. CONTEXTE D'UTILISATION DE L'ANALYSE ================= -->
 
         <div class="form-section">
