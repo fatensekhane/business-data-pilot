@@ -40,7 +40,10 @@
         class="request-form"
         action="https://formsubmit.co/businessdatapilot@gmail.com"
         method="POST"
+        accept-charset="UTF-8"
     >
+
+        <!-- PARAMÈTRES FORMSUBMIT -->
 
         <input type="hidden" name="_subject"
                value="Nouvelle demande - Business Data Pilot">
@@ -96,6 +99,7 @@
                     id="autre-profil"
                     name="autre_profil"
                     placeholder="Précisez votre profil"
+                    disabled
                 >
             </div>
 
@@ -359,7 +363,7 @@
 
         </div>
 
-        <!-- ================= 3. CONTEXTE D'UTILISATION DE L'ANALYSE ================= -->
+        <!-- ================= 3. CONTEXTE D'UTILISATION ================= -->
 
         <div class="form-section">
             <div class="form-section-title">
@@ -537,7 +541,7 @@
             </div>
         </div>
 
-        <!-- ================= 7. MODE ET FORMAT DE RÉCUPÉRATION ================= -->
+        <!-- ================= 7. MODE ET FORMAT ================= -->
 
         <div class="form-section">
             <div class="form-section-title">
@@ -748,27 +752,11 @@
 
 <script>
 
-// Affichage du champ Autre pour le profil
-
-const profilAutre = document.getElementById("profil-autre");
-const autreProfilGroup = document.getElementById("autre-profil-group");
-const profilRadios = document.querySelectorAll('input[name="profil"]');
-
-profilRadios.forEach((radio) => {
-    radio.addEventListener("change", () => {
-        const isAutre = profilAutre.checked;
-        autreProfilGroup.style.display = isAutre ? "block" : "none";
-
-        if (!isAutre) {
-            document.getElementById("autre-profil").value = "";
-        }
-    });
-});
-
-
 // Afficher ou masquer une section
+// Les champs masqués sont désactivés et ne seront pas envoyés.
 
 function afficherSection(element, visible) {
+
     if (!element) return;
 
     element.style.display = visible ? "block" : "none";
@@ -780,7 +768,30 @@ function afficherSection(element, visible) {
 }
 
 
-// Choix du projet
+// 1. Profil : choix Autre
+
+const profilAutre = document.getElementById("profil-autre");
+const autreProfilGroup = document.getElementById("autre-profil-group");
+const profilRadios = document.querySelectorAll('input[name="profil"]');
+
+profilRadios.forEach(radio => {
+
+    radio.addEventListener("change", () => {
+
+        const isAutre = profilAutre.checked;
+
+        afficherSection(autreProfilGroup, isAutre);
+
+        if (!isAutre) {
+            document.getElementById("autre-profil").value = "";
+        }
+
+    });
+
+});
+
+
+// 2. Choix du projet
 
 function afficherDomaine() {
 
@@ -798,28 +809,36 @@ function afficherDomaine() {
         afficherSection(sectionDans, true);
         afficherSection(sectionHors, false);
 
+        // Réinitialiser les choix de la partie non sélectionnée
+
         document.querySelectorAll('input[name="choixHors"]')
             .forEach(el => el.checked = false);
 
         document.getElementById("descriptionAutreObjectif").value = "";
         document.getElementById("descriptionAccompagnement").value = "";
 
-    } else if (choix.value === "Non, je n’ai pas encore d’idée précise") {
+    } else {
 
         afficherSection(sectionDans, false);
         afficherSection(sectionHors, true);
+
+        // Réinitialiser les choix de la première partie
 
         document.querySelectorAll('input[name="service"]')
             .forEach(el => el.checked = false);
 
         document.getElementById("objectifSupplementaire").value = "";
 
+        document.querySelectorAll('input[name="choixHors"]')
+            .forEach(el => el.checked = false);
+
         afficherHors();
     }
+
 }
 
 
-// Choix hors du domaine statistique
+// 3. Choix hors du domaine statistique
 
 function afficherHors() {
 
@@ -831,6 +850,7 @@ function afficherHors() {
     const accompagnement = document.getElementById("accompagnement");
 
     const afficherAutre = choix && choix.value === "Autre objectif";
+
     const afficherAccompagnement =
         choix && choix.value === "Accompagnement personnalisé";
 
@@ -844,10 +864,11 @@ function afficherHors() {
     if (afficherAccompagnement) {
         document.getElementById("descriptionAutreObjectif").value = "";
     }
+
 }
 
 
-// Afficher le champ Autre dans le contexte d'utilisation
+// 4. Contexte d'utilisation : choix Autre
 
 function afficherAutreContexte() {
 
@@ -856,6 +877,7 @@ function afficherAutreContexte() {
     );
 
     const autreContexte = document.getElementById("autreContexteAnalyse");
+
     const afficherAutre = choix && choix.value === "Autre";
 
     afficherSection(autreContexte, Boolean(afficherAutre));
@@ -863,10 +885,11 @@ function afficherAutreContexte() {
     if (!afficherAutre) {
         document.getElementById("descriptionAutreContexte").value = "";
     }
+
 }
 
 
-// Afficher les trois choix supplémentaires lorsque le mode comprend le bureau
+// 5. Mode de récupération
 
 function afficherMode() {
 
@@ -882,64 +905,36 @@ function afficherMode() {
     afficherSection(optionsBureau, Boolean(afficher));
 
     if (!afficher) {
+
         document.querySelectorAll('input[name="format_bureau"]')
             .forEach(input => input.checked = false);
+
     }
+
 }
 
 
-// Initialisation
+// 6. Initialisation des sections masquées
 
 document.addEventListener("DOMContentLoaded", function() {
 
+    afficherSection(document.getElementById("autre-profil-group"), false);
+
     afficherSection(document.getElementById("sectionDans"), false);
+
     afficherSection(document.getElementById("sectionHors"), false);
+
     afficherSection(document.getElementById("autreObjectif"), false);
+
     afficherSection(document.getElementById("accompagnement"), false);
+
     afficherSection(document.getElementById("autreContexteAnalyse"), false);
+
     afficherSection(document.getElementById("optionsBureau"), false);
 
 });
-
-function afficherDomaine() {
-
-    const choix = document.querySelector(
-        'input[name="idee_analyse"]:checked'
-    );
-
-    const sectionDans = document.getElementById("sectionDans");
-    const sectionHors = document.getElementById("sectionHors");
-
-    if (!choix) return;
-
-    if (choix.value === "Oui, j’ai déjà une idée") {
-
-        sectionDans.style.setProperty("display", "block", "important");
-        sectionHors.style.setProperty("display", "none", "important");
-
-        sectionDans.querySelectorAll("input, textarea, select")
-            .forEach(element => element.disabled = false);
-
-        sectionHors.querySelectorAll("input, textarea, select")
-            .forEach(element => element.disabled = true);
-
-    } else {
-
-        sectionDans.style.setProperty("display", "none", "important");
-        sectionHors.style.setProperty("display", "block", "important");
-
-        sectionDans.querySelectorAll("input, textarea, select")
-            .forEach(element => element.disabled = true);
-
-        sectionHors.querySelectorAll("input, textarea, select")
-            .forEach(element => element.disabled = false);
-
-        afficherHors();
-    }
-}
 
 </script>
 
 </body>
 </html>
-
