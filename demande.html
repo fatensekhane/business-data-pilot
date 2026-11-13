@@ -753,10 +753,7 @@
 <script>
 
 // Afficher ou masquer une section
-// Les champs masqués sont désactivés et ne seront pas envoyés.
-
 function afficherSection(element, visible) {
-
     if (!element) return;
 
     element.style.display = visible ? "block" : "none";
@@ -765,6 +762,72 @@ function afficherSection(element, visible) {
         .forEach(input => {
             input.disabled = !visible;
         });
+
+    synchroniserValidation();
+}
+
+
+// Champs conditionnels obligatoires
+function synchroniserValidation() {
+
+    const champsConditionnels = [
+        "autre-profil",
+        "descriptionAutreObjectif",
+        "descriptionAutreContexte"
+    ];
+
+    champsConditionnels.forEach(id => {
+        const champ = document.getElementById(id);
+
+        if (champ) {
+            champ.required = !champ.disabled;
+        }
+    });
+
+    // Vérification des groupes de cases à cocher
+    verifierGroupesCases();
+}
+
+
+// Vérifier qu'au moins une case est cochée
+function verifierGroupesCases() {
+
+    const groupes = [
+        {
+            nom: "service",
+            message: "Veuillez sélectionner au moins un service."
+        },
+        {
+            nom: "langue",
+            message: "Veuillez sélectionner au moins une langue."
+        },
+        {
+            nom: "format_document",
+            message: "Veuillez sélectionner au moins un format de document."
+        }
+    ];
+
+    groupes.forEach(groupe => {
+
+        const cases = Array.from(
+            document.querySelectorAll(
+                `input[type="checkbox"][name="${groupe.nom}"]`
+            )
+        );
+
+        const actives = cases.filter(c => !c.disabled);
+        const premiere = actives[0];
+
+        cases.forEach(c => c.setCustomValidity(""));
+
+        if (!premiere) return;
+
+        const selection = actives.some(c => c.checked);
+
+        if (!selection) {
+            premiere.setCustomValidity(groupe.message);
+        }
+    });
 }
 
 
@@ -772,9 +835,8 @@ function afficherSection(element, visible) {
 
 const profilAutre = document.getElementById("profil-autre");
 const autreProfilGroup = document.getElementById("autre-profil-group");
-const profilRadios = document.querySelectorAll('input[name="profil"]');
 
-profilRadios.forEach(radio => {
+document.querySelectorAll('input[name="profil"]').forEach(radio => {
 
     radio.addEventListener("change", () => {
 
@@ -785,9 +847,7 @@ profilRadios.forEach(radio => {
         if (!isAutre) {
             document.getElementById("autre-profil").value = "";
         }
-
     });
-
 });
 
 
@@ -809,8 +869,6 @@ function afficherDomaine() {
         afficherSection(sectionDans, true);
         afficherSection(sectionHors, false);
 
-        // Réinitialiser les choix de la partie non sélectionnée
-
         document.querySelectorAll('input[name="choixHors"]')
             .forEach(el => el.checked = false);
 
@@ -821,8 +879,6 @@ function afficherDomaine() {
 
         afficherSection(sectionDans, false);
         afficherSection(sectionHors, true);
-
-        // Réinitialiser les choix de la première partie
 
         document.querySelectorAll('input[name="service"]')
             .forEach(el => el.checked = false);
@@ -835,6 +891,7 @@ function afficherDomaine() {
         afficherHors();
     }
 
+    synchroniserValidation();
 }
 
 
@@ -865,6 +922,7 @@ function afficherHors() {
         document.getElementById("descriptionAutreObjectif").value = "";
     }
 
+    synchroniserValidation();
 }
 
 
@@ -886,6 +944,7 @@ function afficherAutreContexte() {
         document.getElementById("descriptionAutreContexte").value = "";
     }
 
+    synchroniserValidation();
 }
 
 
@@ -908,33 +967,84 @@ function afficherMode() {
 
         document.querySelectorAll('input[name="format_bureau"]')
             .forEach(input => input.checked = false);
-
     }
 
+    synchroniserValidation();
 }
 
 
-// 6. Initialisation des sections masquées
+// 6. Initialisation et validation
 
 document.addEventListener("DOMContentLoaded", function() {
 
+    // Sections masquées au départ
     afficherSection(document.getElementById("autre-profil-group"), false);
-
     afficherSection(document.getElementById("sectionDans"), false);
-
     afficherSection(document.getElementById("sectionHors"), false);
-
     afficherSection(document.getElementById("autreObjectif"), false);
-
     afficherSection(document.getElementById("accompagnement"), false);
-
     afficherSection(document.getElementById("autreContexteAnalyse"), false);
-
     afficherSection(document.getElementById("optionsBureau"), false);
+
+
+    // Champs obligatoires du profil
+    document.getElementById("nom").required = true;
+    document.getElementById("email").required = true;
+    document.getElementById("telephone").required = true;
+
+
+    // Groupes de boutons radio obligatoires
+    const groupesRadio = [
+        "profil",
+        "idee_analyse",
+        "choixHors",
+        "objectif_analyse",
+        "delai",
+        "accompagnement",
+        "mode_recuperation",
+        "format_bureau"
+    ];
+
+    groupesRadio.forEach(nom => {
+
+        const premier = document.querySelector(
+            `input[type="radio"][name="${nom}"]`
+        );
+
+        if (premier) {
+            premier.required = true;
+        }
+    });
+
+
+    // Mise à jour des validations des cases à cocher
+    document.querySelectorAll('input[type="checkbox"]').forEach(input => {
+
+        input.addEventListener("change", synchroniserValidation);
+    });
+
+
+    // Vérification avant l'envoi
+    const formulaire = document.querySelector(".request-form");
+
+    formulaire.addEventListener("submit", function(event) {
+
+        synchroniserValidation();
+
+        if (!formulaire.checkValidity()) {
+
+            event.preventDefault();
+
+            formulaire.reportValidity();
+        }
+    });
+
+    synchroniserValidation();
 
 });
 
 </script>
+
 
 </body>
 </html>
