@@ -901,6 +901,43 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
+function afficherDomaine() {
+
+    const choix = document.querySelector(
+        'input[name="idee_analyse"]:checked'
+    );
+
+    const sectionDans = document.getElementById("sectionDans");
+    const sectionHors = document.getElementById("sectionHors");
+
+    if (!choix) return;
+
+    if (choix.value === "Oui, j’ai déjà une idée") {
+
+        sectionDans.style.setProperty("display", "block", "important");
+        sectionHors.style.setProperty("display", "none", "important");
+
+        sectionDans.querySelectorAll("input, textarea, select")
+            .forEach(element => element.disabled = false);
+
+        sectionHors.querySelectorAll("input, textarea, select")
+            .forEach(element => element.disabled = true);
+
+    } else {
+
+        sectionDans.style.setProperty("display", "none", "important");
+        sectionHors.style.setProperty("display", "block", "important");
+
+        sectionDans.querySelectorAll("input, textarea, select")
+            .forEach(element => element.disabled = true);
+
+        sectionHors.querySelectorAll("input, textarea, select")
+            .forEach(element => element.disabled = false);
+
+        afficherHors();
+    }
+}
+
 </script>
 
 </body>
